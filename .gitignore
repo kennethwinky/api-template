@@ -1,0 +1,34 @@
+### macOS ###
+*.DS_Store
+.AppleDouble
+.LSOverride
+
+# build
+dist/
+dist.zip
+
+# configs
+dev*.js
+uat*.js
+prod*.js
+
+### Node ###
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dependency directories
+node_modules/
+jspm_packages/
+
+### PhpStorm+all Patch ###
+# Ignores the whole idea folder
+# See https://github.com/joeblau/gitignore.io/issues/186 and https://github.com/joeblau/gitignore.io/issues/360
+
+.idea/
+
+# Optional npm cache directory
+.npm

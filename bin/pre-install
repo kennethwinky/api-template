@@ -1,0 +1,10 @@
+#!/bin/bash
+
+touch .npmrc
+truncate -s 0 .npmrc
+
+echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> .npmrc
+echo "_auth=$NPM_TOKEN" >> .npmrc
+echo "email=dennis92622@gmail.com" >> .npmrc
+echo "always-auth=true" >> .npmrc
+echo "@ndsdev:registry=https://registry.npmjs.org/" >> .npmrc
