@@ -1,5 +1,5 @@
 
-export default class CategoryModel {
+export default class {
   constructor(mongoose) {
     this.mongoose = mongoose;
     return this.registerSchema();
@@ -9,6 +9,7 @@ export default class CategoryModel {
     const schema = new this.mongoose.Schema({
       email: {
         type: String,
+        unique: true,
         required: true,
       },
       displayName: {
@@ -44,6 +45,6 @@ export default class CategoryModel {
       },
     );
 
-    return this.mongoose.model('User', schema);
+    return this.mongoose.model('Admin', schema);
   }
 }

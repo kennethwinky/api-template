@@ -1,5 +1,6 @@
 import compression from 'compression';
 import cors from 'cors';
+import { AuthMiddleware } from '../middlewares';
 
 import {
   CategoryController,
@@ -46,6 +47,10 @@ export default class {
       ParamValidation: this.ParamValidation,
     };
 
+    const authMiddleware = new AuthMiddleware(
+      necessaryModules,
+    );
+
     const categoryModel = new model.Category(this.mongoose);
     const adminModel = new model.Admin(this.mongoose);
 
@@ -78,6 +83,8 @@ export default class {
       Object.assign(necessaryModules, {
         router: accountRouterV1,
         adminModel,
+        security: this.security,
+        authMiddleware,
       }),
     );
 

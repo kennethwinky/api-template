@@ -12,4 +12,12 @@ module.exports = {
     code: -2,
     message: '{{message}}',
   },
+  LOGIN_FAIL: {
+    code: -3,
+    message: '電郵/密碼錯誤',
+  },
+  AUTH_FAIL: {
+    code: -4,
+    message: '沒有權限',
+  },
 };

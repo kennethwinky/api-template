@@ -59,14 +59,14 @@ export default class {
 
     // enable detailed API logging in dev env
     if (config.env === 'development') {
-      expressWinston.requestWhitelist.push('body');
-      expressWinston.responseWhitelist.push('body');
-      app.use(expressWinston.logger({
-        winstonInstance,
-        meta: true, // optional: log meta data about request (defaults to true)
-        msg: 'HTTP {{req.method}} {{req.url}} {{res.statusCode}} {{res.responseTime}}ms',
-        colorStatus: true, // Color the status code (default green, 3XX cyan, 4XX yellow, 5XX red).
-      }));
+      // expressWinston.requestWhitelist.push('body');
+      // expressWinston.responseWhitelist.push('body');
+      // app.use(expressWinston.logger({
+      //   winstonInstance,
+      //   meta: true, // optional: log meta data about request (defaults to true)
+      //   msg: 'HTTP {{req.method}} {{req.url}} {{res.statusCode}} {{res.responseTime}}ms',
+      //   colorStatus: true, // Color the status code (default green, 3XX cyan, 4XX yellow, 5XX red).
+      // }));
     }
 
     app.use((req, res, next) => {
@@ -131,9 +131,9 @@ export default class {
 
     // log error in winston transports except when executing test suite
     if (config.get('env') !== 'test') {
-      app.use(expressWinston.errorLogger({
-        winstonInstance,
-      }));
+      // app.use(expressWinston.errorLogger({
+      //   winstonInstance,
+      // }));
     }
 
     // error handler, send stacktrace only during development

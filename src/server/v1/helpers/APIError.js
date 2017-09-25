@@ -35,8 +35,13 @@ class APIError extends ExtendableError {
       message: 'unknown error',
       values: {},
     },
-    isPublic = false) {
-    super(systemMsg, status, displayError, isPublic);
+    isPublic = true) {
+    const error = (displayError) || {
+      code: -1,
+      message: 'unknown error',
+      values: {},
+    };
+    super(systemMsg, status, error, isPublic);
   }
 }
 

@@ -1,9 +1,6 @@
-import roleVerify from './roleVerify.middleware';
-import userRole from './userRole.middleware';
-import userVerify from './userVerify.middleware';
+
+import AuthMiddleware from './auth';
 
 export {
-  roleVerify,
-  userRole,
-  userVerify,
+  AuthMiddleware,
 };

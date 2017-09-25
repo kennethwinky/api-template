@@ -3,9 +3,10 @@ import Controller from './base';
 export default class CategoryController extends Controller {
   constructor(necessaryModules) {
     super(necessaryModules);
-    this.registerRoutes();
 
     this.categoryCollection = this.db.collection('categories');
+
+    this.registerRoutes();
   }
 
   registerRoutes() {

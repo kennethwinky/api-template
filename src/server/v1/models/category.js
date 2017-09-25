@@ -1,5 +1,5 @@
 
-export default class CategoryModel {
+export default class {
   constructor(mongoose) {
     this.mongoose = mongoose;
     return this.registerSchema();

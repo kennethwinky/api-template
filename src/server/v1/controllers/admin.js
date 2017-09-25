@@ -3,9 +3,10 @@ import Controller from './base';
 export default class AdminController extends Controller {
   constructor(necessaryModules) {
     super(necessaryModules);
-    this.registerRoutes();
 
     this.adminCollection = this.db.collection('admins');
+
+    this.registerRoutes();
   }
 
   registerRoutes() {

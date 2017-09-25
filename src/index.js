@@ -8,6 +8,16 @@ import bluebird from 'bluebird';
 import config from 'config';
 import HttpServer from './server/httpServer';
 
+const _log = console.log;
+global.console.log = function () {
+  const traceobj = new Error('').stack.split('\n')[2].split(':');
+  const file = traceobj[0].split(`${process.env.PWD}/`)[1];
+  const line = traceobj[1];
+  const newArgs = [`${file}:${line} >>`];
+  newArgs.push(...arguments);
+  _log(...newArgs);
+};
+
 mongoose.Promise = bluebird;
 mongoose.connect(
   `mongodb://${config.get('mongoose.url')}`,
