@@ -102,6 +102,7 @@ export default class {
     // if error is not an instanceOf APIError, convert it.
     app.use((err, req, res, next) => {
       if (err instanceof expressValidation.ValidationError) {
+        console.log('err is instance of ValidationError');
         // validation error contains errors which is an array of error each containing message[]
         let unifiedErrorMessage = err.errors.map(error => error.messages.join('. ')).join('\n');
         unifiedErrorMessage = he.decode(unifiedErrorMessage);
@@ -115,6 +116,7 @@ export default class {
         );
         return next(error);
       } else if (!(err instanceof APIError)) {
+        console.log('err is not instance of APIError');
         const apiError = new APIError(err.message, err.status, err.displayError, err.isPublic);
         return next(apiError);
       }

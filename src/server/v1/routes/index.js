@@ -47,12 +47,12 @@ export default class {
       ParamValidation: this.ParamValidation,
     };
 
-    const authMiddleware = new AuthMiddleware(
-      necessaryModules,
-    );
-
     const categoryModel = new model.Category(this.mongoose);
     const adminModel = new model.Admin(this.mongoose);
+
+    const authMiddleware = new AuthMiddleware(
+      Object.assign({}, necessaryModules, { security, adminModel }),
+    );
 
     if (process.env.GZIP_RESPONSE) {
       router.use(compression());
@@ -70,17 +70,23 @@ export default class {
     const categoryRouterV1 = express.Router();
     router.use('/category', categoryRouterV1);
     const categoryController = new CategoryController(
-      Object.assign(necessaryModules, { router: categoryRouterV1 }),
+      Object.assign({}, necessaryModules, {
+        router: categoryRouterV1,
+        categoryModel,
+      }),
     );
     const adminRouterV1 = express.Router();
     router.use('/admin', adminRouterV1);
     const adminController = new AdminController(
-      Object.assign(necessaryModules, { router: adminRouterV1 }),
+      Object.assign({}, necessaryModules, {
+        router: adminRouterV1,
+        adminModel,
+      }),
     );
     const accountRouterV1 = express.Router();
     router.use('/account', accountRouterV1);
     const accountController = new AccountController(
-      Object.assign(necessaryModules, {
+      Object.assign({}, necessaryModules, {
         router: accountRouterV1,
         adminModel,
         security: this.security,

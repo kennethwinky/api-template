@@ -3,25 +3,27 @@ import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
 
 export default class {
-  constructor({ security, APIError, ErrorCode, db, mongoose }) {
-    this.APIError = APIError;
-    this.ErrorCode = ErrorCode;
-    this.db = db;
-    this.mongoose = mongoose;
-    this.security = security;
+  constructor({ security, APIError, ErrorCode, db, mongoose, adminModel }) {
+    Object.assign(this, {
+      security,
+      APIError,
+      ErrorCode,
+      db,
+      mongoose,
+      adminModel,
+    });
 
-    this.adminCollection = this.db.collection('admins');
+    this.userVerify = this.userVerify.bind(this);
   }
 
   async userVerify(req, res, next) {
     try {
-      const security = config.get('security');
-      const token = req.get(security.loginTokenKey);
+      const token = req.get(this.security.loginTokenKey);
       if (token) {
-        const tokenHash = crypto.createHmac('sha256', security.loginTokenSalt).update(token).digest('hex').substring(0, 16);
-        const decoded = jwt.verify(token, security.loginTokenSalt);
+        const tokenHash = crypto.createHmac('sha256', this.security.loginTokenSalt).update(token).digest('hex').substring(0, 16);
+        const decoded = jwt.verify(token, this.security.loginTokenSalt);
         const { email } = decoded;
-        const admin = (await this.adminCollection.findOne(
+        const admin = (await this.adminModel.findOne(
           { token: tokenHash },
         ));
         if (!admin) {
@@ -34,8 +36,10 @@ export default class {
       }
       const err = new this.APIError('No Authorization Header', 500, this.ErrorCode.AUTH_FAIL, true);
       return next(err);
-    } catch (err) {
-      return next(err);
+    } catch (e) {
+      console.log(e);
+      e.displayError = this.ErrorCode.AUTH_FAIL;
+      return next(e);
     }
   }
 }

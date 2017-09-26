@@ -1,10 +1,16 @@
 import Controller from './base';
 
 export default class AdminController extends Controller {
-  constructor(necessaryModules) {
+
+  constructor({
+    adminModel,
+    ...necessaryModules,
+  }) {
     super(necessaryModules);
 
-    this.adminCollection = this.db.collection('admins');
+    Object.assign(this, {
+      adminModel,
+    });
 
     this.registerRoutes();
   }
@@ -16,7 +22,7 @@ export default class AdminController extends Controller {
   async getAdmins(req, res, next) {
     let adminResult;
     try {
-      adminResult = await this.adminCollection.find().toArray();
+      adminResult = await this.adminModel.find().lean();
     } catch (e) {
       return next(e);
     }

@@ -1,10 +1,16 @@
+import _ from 'lodash';
 import Controller from './base';
 
 export default class CategoryController extends Controller {
-  constructor(necessaryModules) {
+  constructor({
+    categoryModel,
+    ...necessaryModules,
+  }) {
     super(necessaryModules);
 
-    this.categoryCollection = this.db.collection('categories');
+    Object.assign(this, {
+      categoryModel,
+    });
 
     this.registerRoutes();
   }
@@ -17,10 +23,11 @@ export default class CategoryController extends Controller {
   async getCategories(req, res, next) {
     let categoryResult;
     try {
-      categoryResult = await this.categoryCollection.find().toArray();
+      categoryResult = await this.categoryModel.find().lean();
     } catch (e) {
       return next(e);
     }
+    categoryResult = categoryResult.map(c => _.omit(c, 'createdAt', 'updatedAt'));
     return res.formatSend(categoryResult);
   }
 
@@ -29,7 +36,7 @@ export default class CategoryController extends Controller {
 
     let categoryResult;
     try {
-      categoryResult = await this.categoryCollection.findOne(
+      categoryResult = await this.categoryModel.findOne(
         { _id: this.mongoose.Types.ObjectId(categoryId) },
       );
     } catch (e) {
