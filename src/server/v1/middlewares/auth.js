@@ -1,4 +1,4 @@
-import config from 'config';
+
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
 
@@ -27,17 +27,16 @@ export default class {
           { token: tokenHash },
         ));
         if (!admin) {
-          const err = new this.APIError('Invalid Token', 500, this.ErrorCode.AUTH_FAIL, true);
+          const err = new this.APIError('Invalid Token', 500, this.ErrorCode.AUTH_FAIL);
           return next(err);
         }
         const { _id } = admin;
         req.user = { email, _id };
         return next();
       }
-      const err = new this.APIError('No Authorization Header', 500, this.ErrorCode.AUTH_FAIL, true);
+      const err = new this.APIError('No Authorization Header', 500, this.ErrorCode.AUTH_FAIL);
       return next(err);
     } catch (e) {
-      console.log(e);
       e.displayError = this.ErrorCode.AUTH_FAIL;
       return next(e);
     }

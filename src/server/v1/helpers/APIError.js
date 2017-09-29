@@ -23,8 +23,9 @@ class ExtendableError extends Error {
 class APIError extends ExtendableError {
   /**
    * Creates an API error.
-   * @param {string} message - Error message.
+   * @param {string} systemMsg - System error message.
    * @param {number} status - HTTP status code of error.
+   * @param {string} displayError - Error message.
    * @param {boolean} isPublic - Whether the message should be visible to user or not.
    */
   constructor(

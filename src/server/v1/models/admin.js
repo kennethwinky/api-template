@@ -17,7 +17,6 @@ export default class {
       },
       token: {
         type: String,
-        required: true,
       },
       password: {
         type: String,
@@ -26,7 +25,7 @@ export default class {
       status: {
         type: String,
         enum: ['inactive', 'active', 'suspended'],
-        default: 'inactive',
+        default: 'active',
       },
       createdAt: {
         type: Date,

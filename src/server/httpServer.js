@@ -149,9 +149,9 @@ export default class {
       }
       res.status(err.status).json({
         errorCode,
-        errorMsg,
+        errorMsg: err.message,
         data: {
-          message: err.isPublic ? err.message : httpStatus[err.status],
+          message: err.isPublic ? errorMsg : httpStatus[err.status],
           stack: config.env === 'development' ? err.stack : {},
         },
       });
